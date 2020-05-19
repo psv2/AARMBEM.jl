@@ -1,0 +1,11 @@
+# Output quantities in AARMBEM.jl
+
+AARMBEM.jl only outputs dimensionless integrands. It does not perform
+any integrations over frequency (or over Bloch wavevector, if
+present).
+
+For compact molecular bodies, AARMBEM.jl only requires the
+frequency. For vdW interaction free energies, it outputs the integrand
+``f(\mathrm{i}\xi)``. For thermal radiation powers, it outputs
+one-fourth of the spectrum, namely ``\frac{1}{4} \Phi^{(m)}_{n}
+(\omega)``, without any factors of the Planck function.

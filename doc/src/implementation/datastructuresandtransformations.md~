@@ -1,0 +1,60 @@
+# Data structures and rigid transformations
+
+This page describes the data structures used in AARMBEM.jl, as well as
+conventions for rigid transformations of molecular bodies. The basic
+idea is that for many EM scattering calculations, including vdW
+interaction energies and thermal radiation powers, data is needed at
+each frequency (and Bloch wavevector, if appropriate) and for many
+different geometric configurations, in which each geometric
+configuration consists of a set of rigid transformations applied to
+molecular and macroscopic bodies; as AARMBEM.jl currently only
+implements vacuum or the presence of a PEC plane at ``z = 0`` as the
+macroscopic body, all rigid transformations refer to those applied to
+molecular bodies. The data for each molecular body in isolation is
+independent of the rigid transformation, and therefore may be computed
+once per frequency (and Bloch wavevector, if appropriate); this has
+the additional benefit of being able to reuse data if multiple
+molecular bodies are used which are copies of each other in
+isolation. After this, data is computed for the Green's function and
+T-operator matrices ``G^{\mathrm{mac}}`` and ``T`` for each rigid
+transformation (which may include translations as well as proper
+rotations), efficiently reusing contributions from molecular data
+computed in isolation when possible. Further details are given in the
+remainder of this page.
+
+## Molecular data in isolation
+
+In the RMB framework, every molecular body ``n`` is characterized by
+properties in isolation, including the number of atoms ``N_{n}``,
+atomic coordinates ``\{\vec{r}_{p}\}``, oscillator parameters, and
+atomic polarizabilities. In particular, as the charges, masses,
+damping coefficients, and valence electronic oscillator spring
+constants are all isotropic, they can efficiently be stored as
+``N_{n}``-element vectors; only the screened nuclear oscillator spring
+constants must be stored as a full ``3N_{n} \times 3N_{n}``
+matrix. From these quantities, the polarizability matrix
+``\alpha_{n}`` may be computed once per frequency (and Bloch
+wavevector, if appropriate). Furthermore, the diagonal molecular block
+of the vacuum Green's function matrix ``G^{(0)}_{nn}`` for each
+molecular body ``n`` likewise only depends on the relative positions
+of atoms in that body, not on absolute positions in space, and is
+therefore independent of rigid transformations, requiring computation
+only once per frequency (and Bloch wavevector, if appropriate).
+
+Each molecular body can also be specified to have a certain
+*unweighted* center of mass position and a certain spatial orientation
+relative to the input data. Frequently, it may be desired to perform
+computations involving multiple molecular bodies that have entirely
+identical properties. It would be wasteful to duplicate molecular data
+in such a case, so the AARMBEM.jl code stores only data for unique
+molecular bodies, while separately storing only the centers of mass
+and orientations for each molecular body (distinguishing between
+otherwise identical molecular bodies). The polarizability and vacuum
+Green's function matrices ``\alpha_{n}`` and ``G^{(0)}_{nn}`` for each
+molecular body ``n`` in isolation are reused to construct the Green's
+function and T-operator matrices ``G^{\mathrm{mac}}`` and ``T``, using
+appropriate rotation matrices to reproduce the desired orientations
+while translating the atomic coordinates back and forth accordingly.
+
+## Rigid transformations
+

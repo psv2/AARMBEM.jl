@@ -1,0 +1,16 @@
+MOL sheet1
+Qe graphene3p9nmby3p4nmunitcellQe.txt
+Me graphene3p9nmby3p4nmunitcellMe.txt
+Ke graphene3p9nmby3p4nmunitcellKe.txt
+Be graphene3p9nmby3p4nmunitcellBe.txt
+BI graphene3p9nmby3p4nmunitcellBI.txt
+MI graphene3p9nmby3p4nmunitcellMI.txt
+KI graphene3p9nmby3p4nmunitcellKI.txt
+xyz graphene3p9nmby3p4nmunitcellxyz.txt
+Bescale 1.0
+KIconst 0.0
+ENDMOL
+
+MOL sheet2
+DUPLICATE sheet1
+ENDMOL

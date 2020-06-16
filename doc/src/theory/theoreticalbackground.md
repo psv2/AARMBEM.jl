@@ -258,13 +258,27 @@ m_{\mathrm{e}}^{2} / q_{\mathrm{e}}^{2}``, and ``k_{\mathrm{e}p} =
 q_{\mathrm{e}}^{2}`` in terms of ``\alpha_{\mathrm{e}p0}`` and
 ``\omega_{\mathrm{e}p}`` along with fundamental constants.
 
-!!! warning
+!!! info
 
     AARMBEM.jl does *not* perform DFT calculations, nor does it look
     up reference data. All calculations required to compute
     ``\alpha_{\mathrm{e}p0}``, ``\omega_{\mathrm{e}p}``, and
-    ``K_{\mathrm{I}pi,qj}`` must be done separately. Currently, this
-    documentation does not provide further details in that regard.
+    ``K_{\mathrm{I}pi,qj}`` must be done separately.
+
+    ``K_{\mathrm{I}pi,qj}`` can be obtained with any electronic
+    structure code capable of DFT calculations with analytical
+    nuclear gradients. The force constants (Hessian) are then obtained
+    by numerical finite differencing of the analytical gradients.
+    Care must be taken to ensure that the DFT calculations are sufficiiently
+    converged to eliminate any numerical noise in the Hessian.
+
+    The Hirshfeld volumes used to scale the reference free-atom polarizability
+    can be calculated from the molecular electron density and the respective
+    free-atom electron densities, as described in [^TkatchenkoPRL09].
+
+    The reference free-atom polarizabilities and oscillator frequencies can be
+    obtained from [^GouldJCTC16].
+
 
 Once these quantities are computed, they may be arranged into
 matrices. The nuclear spring constants ``K_{\mathrm{I}pi,qj}`` can
@@ -523,3 +537,5 @@ consistently substituting ``\xi = -\mathrm{i}\omega``.
     properties of the molecular body.
 
 [^VenkataramARXIV2020]: Prashanth S. Venkataram, Jan Hermann, Alexandre Tkatchenko, and Alejandro W. Rodriguez. "Fluctuational Electrodynamics in Atomic and Macroscopic Systems: van der Waals Interactions and Radiative Heat Transfer". [arXiv:2005.04083](https://arxiv.org/abs/2005.04083)
+[^TkatchenkoPRL09]: Alexandre Tkatchenko, Matthias Scheffler. "Accurate Molecular Van Der Waals Interactions from Ground-State Electron Density and Free-Atom Reference Data". Phys. Rev. Lett. 102, 073005 (2009) [DOI:10.1103/PhysRevLett.102.073005](http://dx.doi.org/10.1103/PhysRevLett.102.073005)
+[^GouldJCTC16]: Tim Gould, Tomáš Bučko. "C6 Coefficients and Dipole Polarizabilities for All Atoms and Many Ions in Rows 1–6 of the Periodic Table". J. Chem. Theory Comput. 12, 3603 (2016). [DOI:10.1021/acs.jctc.6b00361](http://dx.doi.org/10.1021/acs.jctc.6b00361)

@@ -27,7 +27,29 @@ languages meaning "beginning" or "ab-initio".
 
 ## Installation
 
-In the future, AARMBEM.jl may be properly packaged as a module that
-may be installed and used. For now, the simplest way to install it is
-to download and locally save the full directory of code from GitHub,
-and running the code from other directories pointing to this one.
+AARMBEM.jl is a proper Julia package and can be installed as such.
+For a quick start, follow these steps:
+
+1. Create a new Julia environment with
+
+```
+$ mkdir Project && cd Project
+$ julia   # follow by pressing `]`
+pkg> activate .
+```
+
+2. Install AARMBEM.jl with
+
+```
+pkg> add https://github.com/psv2/AARMBEM.jl.git
+```
+
+3. Exit package manager with `CTRL+C` and import the `AARMBEM` package:
+
+```
+julia> import AARMBEM
+```
+
+The command-line programs that use the `AARMBEM` package, `AARMBEM_heat.jl` and
+`AARMBEM_vdW.jl`, can be downloaded from
+[Github](https://github.com/psv2/AARMBEM.jl) in the subdirectory `scripts`.
